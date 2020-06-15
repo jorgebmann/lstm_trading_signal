@@ -7,8 +7,6 @@ library(reticulate)
 library(caret)
 library(PerformanceAnalytics)
 
-#setwd('/Users/jorgbahlmann/stocks/lstm_timeseries/')
-setwd('/mnt/hdd/stocks/project_lstm_securities/')
 
 # for reproducible results:
 set.seed(123)
@@ -34,11 +32,9 @@ hist(l)
 # Remove securities with less than 1000 timesteps:
 S_filtered <- lapply(S_filtered, function(x) if (length(index(x)) > 1000) {x = x} else {x = NULL})
 S_filtered <- Filter(Negate(is.null), S_filtered)
-list.save(S_filtered, file = '/Users/jorgbahlmann/stocks/data/S_euro50_2020-06-10.rds')
+#list.save(S_filtered, file = 'S_euro50_2020-06-10.rds')
 
-  
-#S <- list.load(file = '/Users/jorgbahlmann/stocks/data/S_euro50_2020-06-10.rds')
-S <- list.load(file = '/mnt/hdd/stocks/project_lstm_securities/S_euro50_2020-06-10.rds')
+#S <- list.load(file = 'S_euro50_2020-06-10.rds')
 # Calculate daily (log) returns for each security:
 R <- lapply(S, function(x) x$return = Delt(x$Close, k = 1, type = c('log')))
 head(R[[2]])
@@ -55,8 +51,8 @@ dim(returns_filtered)
 returns_filtered <- na.approx(returns_filtered)
 dim(returns_filtered)
 returns_filtered <- returns_filtered[-1,]
-write.csv(returns_filtered, file = '/Users/jorgbahlmann/stocks/data/euro50_return_target.csv')
-returns_filtered <- read.csv('euro50_return_target.csv', stringsAsFactors = F)
+#write.csv(returns_filtered, file = 'euro50_return_target.csv')
+#returns_filtered <- read.csv('euro50_return_target.csv', stringsAsFactors = F)
 returns_filtered <- returns_filtered[,-1]
 returns_filtered <- data.frame(returns_filtered)
 
